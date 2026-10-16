@@ -29,13 +29,34 @@ def find_route(grid):
     parent = {grid.start: None}
     pending = deque([grid.start])
     # ... tulis pencariannya di sini ...
+    while pending:
+        current = pending.popleft()
+        if current == grid.finish:
+            break
+        for d in range(DIRECTION_COUNT):
+            neighbor = Cell(row = current.row + DIRECTION_ROW[d], col = current.col + DIRECTION_COL[d])
+            if grid.inside(neighbor) and not grid.is_obstacle(neighbor) and neighbor not in parent:
+                parent[neighbor] = current
+                pending.append(neighbor)
 
     return trace_back(parent, grid.finish)
 
 # TODO: TASK C
 def route_to_directions(route):
     # Ubah rute (daftar kotak) jadi daftar arah tiap langkah: 0 timur, 1 utara, 2 barat, 3 selatan.
-    return []
+    directions = []
+    for i in range(1, len(route)):
+        current = route[i - 1]
+        next_cell = route[i]
+        if next_cell.row > current.row:
+            directions.append(1)  # utara
+        elif next_cell.row < current.row:
+            directions.append(3)  # selatan
+        elif next_cell.col > current.col:
+            directions.append(0)  # timur
+        else:
+            directions.append(2)  # barat
+    return directions
 
 # TODO: TASK D
 def directions_to_instructions(directions):
