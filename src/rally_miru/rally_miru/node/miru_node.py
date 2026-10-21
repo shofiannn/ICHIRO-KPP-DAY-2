@@ -115,7 +115,14 @@ class MiruNode:
 
     def publish_velocity(self, linear, angular):
         # Kirim satu Twist: linear.x untuk maju, angular.z untuk berputar.
-        pass
+        #D3 : membuat "msg" kosong
+        msg = Twist()
+        #kecepatan maju
+        msg.linear.x = float(linear)
+        #kecepatan berputar di tempat
+        msg.linear.z = float(angular)
+        #msg di publish sama publisher "cmd_vel_publisher" 
+        self.cmd_vel_publisher.publish(msg)
 
     # TODO: TASK C
     def on_race_state(self, msg):

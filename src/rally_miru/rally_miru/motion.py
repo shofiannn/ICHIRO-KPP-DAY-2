@@ -33,7 +33,7 @@ def target_point(x, y, heading, cells):
     return x, y
 
 def remaining_distance(x, y, heading, target_x, target_y):
-    # Hitung sisa jarak ke titik tujuan searah `heading`.
+    #D2 :  Hitung sisa jarak ke titik tujuan searah `heading`.
     dx = target_x - x
     dy = target_y - y
     return dx * math.cos(heading) + dy * math.sin(heading)
