@@ -148,9 +148,9 @@ class MiruNode:
 
     # TODO: TASK D
     def start_drive(self, cells):
-        # Hitung titik tujuan `cells` kotak di depan posisi RENCANA (planned_x, planned_y),
+        #D4 : Hitung titik tujuan `cells` kotak di depan posisi RENCANA (planned_x, planned_y),
         # lalu simpan di self.target_x dan self.target_y.
-        pass
+        self.target_x, self.target_y = target_point(self.planned_x, self.planned_y, self.planned_heading, cells)
 
     def drive_step(self):
         # Jika sisa jarak ke target sudah 0 atau negatif, hentikan kura-kura dan return True.
