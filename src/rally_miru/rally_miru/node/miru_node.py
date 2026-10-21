@@ -67,6 +67,8 @@ class MiruNode:
         self.target_heading = 0.0
 
         # TODO: TASK A - Subscribe ke INSTRUCTION_TOPIC dengan callback on_instruction.
+        #A1 : membuat subscription yang menerima pesan "Instruction" dari topic "INSTRUCTION_TOPIC" dengan ukuran 20 dan callback "on_instruction"  
+        self.node.create_subscription(Instruction, INSTRUCTION_TOPIC, self.on_instruction, 20)
 
         # TODO: TASK B - Buat publisher untuk CMD_VEL_TOPIC dan subscriber untuk POSE_TOPIC dengan callback on_pose.
         #B1 : buat publisher yang mengirim pesan dengan jenis "Twist" ke topic "CMD_VEL_TOPIC" dengan ukuran 20 
