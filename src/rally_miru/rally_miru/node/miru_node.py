@@ -94,7 +94,7 @@ class MiruNode:
     # TODO: TASK B
     def on_pose(self, msg):
         # Simpan pose terbaru di self.pose.
-        pass
+        self.pose = msg
 
     def publish_velocity(self, linear, angular):
         # Kirim satu Twist: linear.x untuk maju, angular.z untuk berputar.
