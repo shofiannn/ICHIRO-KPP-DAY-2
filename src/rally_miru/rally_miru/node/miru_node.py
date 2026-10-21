@@ -96,7 +96,9 @@ class MiruNode:
         # Masukkan instruksi ke self.queue.
         # Jika diterima, tampilkan log 'instruksi N: maju D, <nama belokan>' (lihat TURN_NAMES). Jika
         # diabaikan, cukup log debug.
-        pass
+        #A2 : buat "instruction" dengan format "{msg.id, msg.distance, msg.turn}"  
+        instruction = QueuedInstruction(msg.id, msg.distance, msg.turn)
+        accepted = self.queue.add(instruction)
 
     # TODO: TASK B
     def on_pose(self, msg):
