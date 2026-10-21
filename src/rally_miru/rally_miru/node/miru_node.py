@@ -71,11 +71,12 @@ class MiruNode:
         # TODO: TASK B - Buat publisher untuk CMD_VEL_TOPIC dan subscriber untuk POSE_TOPIC dengan callback on_pose.
         #buat publisher yang mengirim pesan dengan jenis "Twist" ke topic "CMD_VEL_TOPIC" dengan ukuran 20 
         self.cmd_vel_publisher = self.node.create_publisher(Twist, CMD_VEL_TOPIC, 20)
-        #buat subcsription yang menerima pesan berjenis "Pose" dari topic "POSE_TOPIC" dengan ukuran 20 dan langsung nge run self.on_pose
+        #buat subcsription yang menerima pesan berjenis "Pose" dari topic "POSE_TOPIC" dengan ukuran 20 dan callback self.on_pose
         self.node.create_subscription(Pose, POSE_TOPIC, self.on_pose, 20)
 
         # TODO: TASK C - Daftarkan parameter SPEED_PARAM dengan on_parameter_change,
-        # lalu subscribe ke RACE_STATE_TOPIC dengan callback on_race_state.
+        #buat subscription yang menerima pesan berjenis "Racestate" dari topic "RACE_STATE_TOPIC" dengan ukuran 20 dan callback "self.on_race_state"
+        self.node.create_subscription(RaceState, RACE_STATE_TOPIC, self.on_race_state,  20)
 
         # TODO: TASK F - Buat publisher untuk STATUS_TOPIC dan timer yang memanggil
         # publish_status tiap STATUS_PERIOD.
