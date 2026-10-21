@@ -111,6 +111,15 @@ class MiruNode:
         return self.node.get_parameter(SPEED_PARAM).value
 
     def on_parameter_change(self, parameters):
+        for parameter in parameters:
+            #ngambil parameter "SPEED_PARAM" aja
+            if parameter.name == SPEED_PARAM:
+                #klo lebih kecil dari "MIN_SPEED" atau lebih besar "MAX_SPEED" akan ditolak
+                if parameter.value < MIN_SPEED or parameter.value > MAX_SPEED:
+                    return SetParametersResult(
+                        succesful = False,
+                        reason=f'speed harus antara {MIN_SPEED} dan {MAX_SPEED} m/s'
+                    )
         # Tolak speed di luar MIN_SPEED sampai MAX_SPEED, selain itu terima.
         return SetParametersResult(successful=True)
 
