@@ -29,8 +29,8 @@ def target_point(x, y, heading, cells):
     distance = cells * CELL_SIZE
     #menentukan arah maju
     target_x = x + math.cos(heading) * distance
-    target_y = y + math.cos(heading) * distance
-    return x, y
+    target_y = y + math.sin(heading) * distance
+    return target_x, target_y
 
 def remaining_distance(x, y, heading, target_x, target_y):
     #D2 :  Hitung sisa jarak ke titik tujuan searah `heading`.
