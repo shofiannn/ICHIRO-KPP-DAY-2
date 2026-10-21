@@ -103,7 +103,8 @@ class MiruNode:
     # TODO: TASK C
     def on_race_state(self, msg):
         # Simpan status lomba terbaru di self.race_state.
-        pass
+        #status lomba atau angka status ada di msg.state => 0 = bersiap, 1 = hitung mundur, 2 = GO, 3 = selesai, 4 = gagal
+        self.race_state = msg.state
 
     def get_speed(self):
         return self.node.get_parameter(SPEED_PARAM).value
