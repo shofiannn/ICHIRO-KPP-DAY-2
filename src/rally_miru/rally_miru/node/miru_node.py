@@ -99,6 +99,14 @@ class MiruNode:
         #A2 : buat "instruction" dengan format "{msg.id, msg.distance, msg.turn}"  
         instruction = QueuedInstruction(msg.id, msg.distance, msg.turn)
         accepted = self.queue.add(instruction)
+        #A3 : Menampilkan "msg" dengan format "instruction" jika "msg.id" valid
+        if accepted:
+            self.node.get_logger().info(
+                f'instruksi {msg.id} : maju {msg.distance}, {TURN_NAMES[msg.turn]}'
+            )
+        #jika tidak, pesan ini akan muncul
+        else:
+            self.node.get_logger().debug(f'instruksi {msg.id} diabaikan')
 
     # TODO: TASK B
     def on_pose(self, msg):
