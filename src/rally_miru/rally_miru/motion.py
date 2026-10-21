@@ -25,6 +25,11 @@ def snap_heading(theta):
 def target_point(x, y, heading, cells):
     # Hitung titik tujuan jika maju `cells` kotak dari (x, y) searah `heading`. Return (target_x,
     # target_y).
+    #D1 : jarak = jumlah kotak * "CELL_SIZE" => 1 meter
+    distance = cells * CELL_SIZE
+    #menentukan arah maju
+    target_x = x + math.cos(heading) * distance
+    target_y = y + math.cos(heading) * distance
     return x, y
 
 def remaining_distance(x, y, heading, target_x, target_y):
