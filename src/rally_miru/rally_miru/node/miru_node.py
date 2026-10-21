@@ -155,7 +155,15 @@ class MiruNode:
     def drive_step(self):
         # Jika sisa jarak ke target sudah 0 atau negatif, hentikan kura-kura dan return True.
         # Jika belum, maju dengan self.get_speed() dan return False.
-        return True
+        #D5 : menghitung sisa jarak posisi miru sekarang dengan posisi tujuan
+        remaining = remaining_distance(self.pose.x, self.pose.y, self.planned_heading, self.target_x, self.target_y)
+        #klo sisa nya udh 0 atau negatif, miru akan diam (linear_x = 0 dan linear_z = 0)
+        if remaining <= 0 :
+            self.publish_velocity(0.0, 0.0)
+            return True
+        #klo belum, jalan terus
+        self.publish_velocity(self.get_speed(), 0.0)
+        return False
 
     # TODO: TASK E
     def start_turn(self, turn):
