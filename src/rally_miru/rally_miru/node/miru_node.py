@@ -69,13 +69,17 @@ class MiruNode:
         # TODO: TASK A - Subscribe ke INSTRUCTION_TOPIC dengan callback on_instruction.
 
         # TODO: TASK B - Buat publisher untuk CMD_VEL_TOPIC dan subscriber untuk POSE_TOPIC dengan callback on_pose.
-        #buat publisher yang mengirim pesan dengan jenis "Twist" ke topic "CMD_VEL_TOPIC" dengan ukuran 20 
+        #B1 : buat publisher yang mengirim pesan dengan jenis "Twist" ke topic "CMD_VEL_TOPIC" dengan ukuran 20 
         self.cmd_vel_publisher = self.node.create_publisher(Twist, CMD_VEL_TOPIC, 20)
-        #buat subcsription yang menerima pesan berjenis "Pose" dari topic "POSE_TOPIC" dengan ukuran 20 dan callback self.on_pose
+        #B2 : buat subcsription yang menerima pesan berjenis "Pose" dari topic "POSE_TOPIC" dengan ukuran 20 dan callback self.on_pose
         self.node.create_subscription(Pose, POSE_TOPIC, self.on_pose, 20)
 
         # TODO: TASK C - Daftarkan parameter SPEED_PARAM dengan on_parameter_change,
-        #buat subscription yang menerima pesan berjenis "Racestate" dari topic "RACE_STATE_TOPIC" dengan ukuran 20 dan callback "self.on_race_state"
+        #C4 : deklarasi "SPEED_PARAM" dengan nilai awal = "1.0"
+        self.node.declare_parameter(SPEED_PARAM, 1.0)
+        #C4: verifikasi perubahan pada "SPEED_PARAM"
+        self.node.add_on_set_parameters_callback(self.on_parameter_change)
+        #C2 : buat subscription yang menerima pesan berjenis "Racestate" dari topic "RACE_STATE_TOPIC" dengan ukuran 20 dan callback "self.on_race_state"
         self.node.create_subscription(RaceState, RACE_STATE_TOPIC, self.on_race_state,  20)
 
         # TODO: TASK F - Buat publisher untuk STATUS_TOPIC dan timer yang memanggil
@@ -94,7 +98,7 @@ class MiruNode:
 
     # TODO: TASK B
     def on_pose(self, msg):
-        # Simpan pose terbaru di self.pose.
+        #B3 : Simpan pose terbaru di self.pose.
         self.pose = msg
 
     def publish_velocity(self, linear, angular):
@@ -104,7 +108,7 @@ class MiruNode:
     # TODO: TASK C
     def on_race_state(self, msg):
         # Simpan status lomba terbaru di self.race_state.
-        #status lomba atau angka status ada di msg.state => 0 = bersiap, 1 = hitung mundur, 2 = GO, 3 = selesai, 4 = gagal
+        #C1 : status lomba atau angka status ada di msg.state => 0 = bersiap, 1 = hitung mundur, 2 = GO, 3 = selesai, 4 = gagal
         self.race_state = msg.state
 
     def get_speed(self):
@@ -112,12 +116,12 @@ class MiruNode:
 
     def on_parameter_change(self, parameters):
         for parameter in parameters:
-            #ngambil parameter "SPEED_PARAM" aja
+            #C3 : ngambil parameter "SPEED_PARAM" aja
             if parameter.name == SPEED_PARAM:
                 #klo lebih kecil dari "MIN_SPEED" atau lebih besar "MAX_SPEED" akan ditolak
                 if parameter.value < MIN_SPEED or parameter.value > MAX_SPEED:
                     return SetParametersResult(
-                        succesful = False,
+                        successful = False,
                         reason=f'speed harus antara {MIN_SPEED} dan {MAX_SPEED} m/s'
                     )
         # Tolak speed di luar MIN_SPEED sampai MAX_SPEED, selain itu terima.
