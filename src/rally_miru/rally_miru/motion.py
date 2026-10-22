@@ -42,7 +42,15 @@ def remaining_distance(x, y, heading, target_x, target_y):
 def turn_target(heading, turn):
     # Hitung arah setelah belok 90 derajat dari `heading` (kiri menambah sudut, kanan mengurangi),
     # lalu rapikan dengan wrap_angle.
-    return heading
+    #E1 : 
+    new_heading = heading
+    if turn == Instruction.TURN_LEFT:
+        #belok kiri = berlawanan arah jarum jam = sudut nambah
+        new_heading = heading + math.pi / 2
+    elif turn == Instruction.TURN_LEFT:
+        #belok kanan = searah jarum jam = sudut berkurang
+        new_heading = heading - math.pi / 2
+    return wrap_angle(new_heading)
 
 # Provided, do not modify
 def turn_rate(error):
