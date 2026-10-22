@@ -4,8 +4,9 @@ from geometry_msgs.msg import Twist
 from rally_interfaces.msg import DriverStatus, Instruction, RaceState
 from rally_miru.instruction_queue import Instruction as QueuedInstruction
 from rally_miru.instruction_queue import InstructionQueue
+#G3
 from rally_miru.motion import (
-    remaining_distance, snap_heading, snap_to_cell_center, target_point, turn_rate, turn_target,
+    approach_speed, remaining_distance, snap_heading, snap_to_cell_center, target_point, turn_rate, turn_target,
     wrap_angle)
 from rcl_interfaces.msg import SetParametersResult
 from turtlesim.msg import Pose
@@ -161,8 +162,10 @@ class MiruNode:
         if remaining <= 0 :
             self.publish_velocity(0.0, 0.0)
             return True
+        #G3
+        speed = approach_speed(remaining, self.get_speed())
         #klo belum, jalan terus
-        self.publish_velocity(self.get_speed(), 0.0)
+        self.publish_velocity(speed, 0.0)
         return False
 
     # TODO: TASK E
