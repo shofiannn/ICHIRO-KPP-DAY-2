@@ -9,7 +9,9 @@ TURN_TOLERANCE = 0.01  # [rad] belokan dianggap selesai jika sisa putarannya leb
 MAX_TURN_RATE = 1.5  # [rad/s]
 MIN_TURN_RATE = 0.3  # [rad/s]
 TURN_GAIN = 4.0  # [1/s]
-
+#G1
+APPROACH_GAIN = 3.0
+APPROACH_MIN_SPEED = 0.05
 
 # Provided, do not modify
 def wrap_angle(angle):
@@ -37,6 +39,15 @@ def remaining_distance(x, y, heading, target_x, target_y):
     dx = target_x - x
     dy = target_y - y
     return dx * math.cos(heading) + dy * math.sin(heading)
+
+#G2
+def approach_speed(remaining, max_speed):
+    #"speed" sama dengan sisa jarak => 1 m = 3 m/s atau 0.1 m = 0.3 m/s
+    speed = remaining * APPROACH_GAIN
+    #batas bawah "speed"
+    speed = max(speed, APPROACH_MIN_SPEED)
+    #"speed" tetap di rentang "speed"
+    return min(speed, max_speed)
 
 # TODO: TASK E
 def turn_target(heading, turn):
