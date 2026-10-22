@@ -174,8 +174,14 @@ class MiruNode:
     def turn_step(self):
         # Hitung selisih self.target_heading dan self.pose.theta, lalu minta kecepatan putarnya ke turn_rate.
         # Jika sudah pas, hentikan kura-kura dan return True. Jika belum, putar dan return
+        error = wrap_angle(self.target_heading - self.pose.theta)
+        rate = turn_rate(error)
+        if rate == 0.0:
+            self.publish_velocity(0.0, 0.0)
+            return True
         # False.
-        return True
+        self.publish_velocity(0.0, rate)
+        return False
 
     # TODO: TASK F
     def publish_status(self):
