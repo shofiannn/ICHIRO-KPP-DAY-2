@@ -87,7 +87,11 @@ class MiruNode:
 
         # TODO: TASK F - Buat publisher untuk STATUS_TOPIC dan timer yang memanggil
         # publish_status tiap STATUS_PERIOD.
-        self.status_publisher = None
+        #F1 : membuat "status_publisher" mengirim pesan "DriverStatus" ke topic "STATUS_TOPIC"
+        self.status_publisher = self.node.create_publisher(DriverStatus, STATUS_TOPIC, 10)
+        #mengirim laporan "self.publish_status" tiap 0.5 detik
+        self.status_timer = self.node.create_timer(STATUS_PERIOD, self.publish_status)
+
 
         self.timer = self.node.create_timer(UPDATE_PERIOD, self.update)
         self.node.get_logger().info('miru siap')
@@ -121,7 +125,7 @@ class MiruNode:
         #kecepatan maju
         msg.linear.x = float(linear)
         #kecepatan berputar di tempat
-        msg.linear.z = float(angular)
+        msg.angular.z = float(angular)
         #msg di publish sama publisher "cmd_vel_publisher" 
         self.cmd_vel_publisher.publish(msg)
 
