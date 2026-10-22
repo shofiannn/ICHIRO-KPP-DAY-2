@@ -168,7 +168,8 @@ class MiruNode:
     # TODO: TASK E
     def start_turn(self, turn):
         # Hitung arah tujuan setelah belok dari planned_heading, lalu simpan di self.target_heading.
-        pass
+        #E2
+        self.target_heading = turn_target(self.planned_heading, turn)
 
     def turn_step(self):
         # Hitung selisih self.target_heading dan self.pose.theta, lalu minta kecepatan putarnya ke turn_rate.
