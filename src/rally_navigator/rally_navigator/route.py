@@ -16,6 +16,29 @@ def trace_back(parent, finish):
     route.reverse()
     return route
 
+def find_route_dfs(grid):
+    # Cari rute dari grid.start ke grid.finish dengan DFS, tetangga dicek berurutan timur, utara, barat, selatan.
+    # Return list kosong kalau tidak ada jalan.
+    if not grid.inside(grid.start) or not grid.inside(grid.finish):#kalau start atau finish di luar grid, return list kosong
+        return []
+
+    parent = {grid.start: None}
+    stack = [grid.start]
+    while stack:
+        current = stack.pop()
+        if current == grid.finish:
+            break
+        for d in range(DIRECTION_COUNT):
+            neighbor = Cell(row=current.row + DIRECTION_ROW[d], col=current.col + DIRECTION_COL[d])
+            if grid.inside(neighbor) and not grid.is_obstacle(neighbor) and neighbor not in parent:
+                parent[neighbor] = current
+                stack.append(neighbor)
+
+    return trace_back(parent, grid.finish)
+
+
+
+
 # TODO: TASK B
 def find_route(grid):
     # Cari rute terpendek dari grid.start ke grid.finish dengan BFS, tetangga dicek berurutan
@@ -65,7 +88,24 @@ def directions_to_instructions(directions):
     # - Jika langkah pertama bukan ke timur, Miru harus belok dulu (instruksi pertama jaraknya 0).
     # - Putar balik ditulis dua belok kiri berturut-turut. 
     # - Instruksi terakhir tidak punya belokan (TURN_NONE).
-    return []
+    instructions = []
+    id = 0
+    step = 0
+    current_direction = 0
+    for direction in directions[:-1]:
+        if(direction == current_direction):
+            step += 1
+        else:
+            if((current_direction - 1)%4 == direction):
+                instructions.append(Instruction(id=id, distance=step, turn=Instruction.TURN_RIGHT))
+            elif((current_direction + 1)%4 == direction):
+                instructions.append(Instruction(id=id, distance=step, turn=Instruction.TURN_LEFT))
+            id += 1
+            step = 1
+            current_direction = direction
+    instructions.append(Instruction(id=id, distance=step, turn=Instruction.TURN_NONE))
+
+    return instructions
 
 # Provided, do not modify
 def route_to_instructions(route):
