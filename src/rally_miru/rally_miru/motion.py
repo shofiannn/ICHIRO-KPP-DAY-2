@@ -47,7 +47,7 @@ def turn_target(heading, turn):
     if turn == Instruction.TURN_LEFT:
         #belok kiri = berlawanan arah jarum jam = sudut nambah
         new_heading = heading + math.pi / 2
-    elif turn == Instruction.TURN_LEFT:
+    elif turn == Instruction.TURN_RIGHT:
         #belok kanan = searah jarum jam = sudut berkurang
         new_heading = heading - math.pi / 2
     return wrap_angle(new_heading)
