@@ -194,7 +194,24 @@ class MiruNode:
     def publish_status(self):
         # Kirim satu DriverStatus berisi state, pose, current_id, done_id, dan jumlah antrean.
         # Jangan kirim jika pose pertama belum datang.
-        pass
+        #F2 : klo posisi miru belum ada, ga ada laporan
+        if self.pose == None:
+            return
+        #buat "msg" berisi "status posisi miru"
+        msg = DriverStatus()
+        #state => kondisi miru sekarang yang memiliki value (0 = menunggu mulai, 1 = maju, 2 = belok)
+        msg.state = self.state.value
+        #ngisi "msg" dari "pose.x", "pose.y", dan arah "self.pose.theta"
+        msg.x = self.pose.x
+        msg.y = self.pose.y
+        msg.theta = self.pose.theta
+        #no instruksi yang sedang dikerjakan dan yang terakhir selesai
+        msg.current_id = self.current_id
+        msg.done_id = self.done_id
+        #jumlah instruksi yang menunggu di antrean
+        msg.queued = len(self.queue)
+        #kirim laporan lewat publisher "status_publisher"
+        self.status_publisher.publish(msg)
 
     # Provided, do not modify
     def set_state(self, new_state):
