@@ -30,7 +30,7 @@ def find_route_dfs(grid):
             break
         for d in range(DIRECTION_COUNT):
             neighbor = Cell(row=current.row + DIRECTION_ROW[d], col=current.col + DIRECTION_COL[d])
-            if grid.inside(neighbor) and not grid.is_obstacle(neighbor) and neighbor not in parent:
+            if grid.inside(neighbor) and not grid.is_rock(neighbor) and neighbor not in parent:
                 parent[neighbor] = current
                 stack.append(neighbor)
 
@@ -58,7 +58,7 @@ def find_route(grid):
             break
         for d in range(DIRECTION_COUNT):
             neighbor = Cell(row = current.row + DIRECTION_ROW[d], col = current.col + DIRECTION_COL[d])
-            if grid.inside(neighbor) and not grid.is_obstacle(neighbor) and neighbor not in parent:
+            if grid.inside(neighbor) and not grid.is_rock(neighbor) and neighbor not in parent:
                 parent[neighbor] = current
                 pending.append(neighbor)
 
@@ -89,21 +89,50 @@ def directions_to_instructions(directions):
     # - Putar balik ditulis dua belok kiri berturut-turut. 
     # - Instruksi terakhir tidak punya belokan (TURN_NONE).
     instructions = []
-    id = 0
+    if not directions:
+        instructions.append(Instruction(id=1, distance=0, turn=0))
+        return instructions
+
+    id = 1
     step = 0
     current_direction = 0
-    for direction in directions[:-1]:
-        if(direction == current_direction):
-            step += 1
+    cnt = 0
+    for direction in directions:
+        if(cnt == len(directions) - 1):
+            if(direction == current_direction):
+                step += 1
+                instructions.append(Instruction(id=id, distance=step, turn=0))
+            else:
+                if((current_direction - 1)%4 == direction):
+                    instructions.append(Instruction(id=id, distance=step, turn=2))
+                elif((current_direction + 1)%4 == direction):
+                    instructions.append(Instruction(id=id, distance=step, turn=1))
+                else:
+                    instructions.append(Instruction(id=id, distance=step, turn=1))
+                    id += 1
+                    step = 0
+                    instructions.append(Instruction(id=id, distance=step, turn=1))
+                id += 1
+                step = 1
+                current_direction = direction
+                instructions.append(Instruction(id=id, distance=step, turn=0))
         else:
-            if((current_direction - 1)%4 == direction):
-                instructions.append(Instruction(id=id, distance=step, turn=Instruction.TURN_RIGHT))
-            elif((current_direction + 1)%4 == direction):
-                instructions.append(Instruction(id=id, distance=step, turn=Instruction.TURN_LEFT))
-            id += 1
-            step = 1
-            current_direction = direction
-    instructions.append(Instruction(id=id, distance=step, turn=Instruction.TURN_NONE))
+            if(direction == current_direction):
+                step += 1
+            else:
+                if((current_direction - 1)%4 == direction):
+                    instructions.append(Instruction(id=id, distance=step, turn=2))
+                elif((current_direction + 1)%4 == direction):
+                    instructions.append(Instruction(id=id, distance=step, turn=1))
+                else:
+                    instructions.append(Instruction(id=id, distance=step, turn=1))
+                    id += 1
+                    step = 0
+                    instructions.append(Instruction(id=id, distance=step, turn=1))
+                id += 1
+                step = 1
+                current_direction = direction
+        cnt += 1
 
     return instructions
 
