@@ -2,8 +2,8 @@
 
 |    NRP     |           Nama             | Bagian             |
 | :--------: |       :------------:       | :----------------: |
-| ---------- | ------------------------   | Miru               |
-| 5054261006 | Afwan Rizky Gazali         | Navigator          |
+| 5025261090 |      M Shofian Najib       | Miru               |
+| 5054261006 |      Afwan Rizky Gazali    | Navigator          |
 
 # Tugas ROS2 - Reli Miru
 
