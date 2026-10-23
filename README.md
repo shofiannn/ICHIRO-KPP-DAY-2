@@ -214,8 +214,7 @@ Penggunaan AI: (sebutkan bagian mana yang dibantu AI, atau tulis "tidak ada")
 ## A. Setup Workspace
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
-
+1. Menjalankan dan menghubungkan turtlesim, wasit, navigator, dan miru
 -
 
 ### Screenshot
