@@ -30,6 +30,7 @@ def target_point(x, y, heading, cells):
     #D1 : jarak = jumlah kotak * "CELL_SIZE" => 1 meter
     distance = cells * CELL_SIZE
     #menentukan arah maju
+    #AI
     target_x = x + math.cos(heading) * distance
     target_y = y + math.sin(heading) * distance
     return target_x, target_y

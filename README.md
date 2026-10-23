@@ -226,7 +226,12 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## A. Antrean Instruksi
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
+1. Buat subscriber untuk menerima instruksi dari navigator
+2. Mengecek apakah ID sudah pernah diterima atau tidak
+3. Menyimpan instruksi ke antrean
+4. Menampilkan pesan
+5. Mengecek apakah masih ada instruksi di antrean atau tidak
+6. Mengambil instruksi di paling kiri dan akan diproses
 
 -
 
@@ -236,8 +241,9 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## B. Pose dan Perintah Gerak
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
-
+1. Membuat publisher untuk mengirimkan pesan ke topic CMD_VEL_TOPIC
+2. Membuat subscriber yang menerima pesan dari topic POSE_TOPIC
+3. Menyimpan msg berisi informasi dari topic POSE_TOPIC ke self.pose 
 -
 
 ### Screenshot
@@ -246,8 +252,10 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## C. Aba-aba GO dan Parameter
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
-
+1. Membuat subscriber yang menerima status terbaru "state" dari topic RACE_STATE_TOPIC
+2. Menyimpan status terbaru "state" ke self.race_state
+3. Mendaftarkan parameter speed "SPEED_PARAM" dengan nilai awal 1
+4. Memverifikasi parameter speed terbaru di function "on_parameter_change"
 -
 
 ### Screenshot
@@ -256,8 +264,9 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## D. Maju
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
-
+1. Menghitung jarak "distance" dan menentukan titik koordinat tujuan (target_x, target_y) yang akan dituju
+2. Menghitung sisa jarak dari x ke target_x
+3. 
 -
 
 ### Screenshot

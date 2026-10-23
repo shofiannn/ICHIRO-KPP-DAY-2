@@ -26,6 +26,7 @@ class InstructionQueue:
         if len(self.ready) == 0:
             return None
         #ngambil id yang ada di paling kiri "self.ready" (yang dateng pertama)
+        #AI
         return self.ready.popleft()
 
     def __len__(self):

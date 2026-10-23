@@ -69,6 +69,7 @@ class MiruNode:
 
         # TODO: TASK A - Subscribe ke INSTRUCTION_TOPIC dengan callback on_instruction.
         #A1 : membuat subscription yang menerima pesan "Instruction" dari topic "INSTRUCTION_TOPIC" dengan ukuran 20 dan callback "on_instruction"  
+        #AI
         self.node.create_subscription(Instruction, INSTRUCTION_TOPIC, self.on_instruction, 20)
 
         # TODO: TASK B - Buat publisher untuk CMD_VEL_TOPIC dan subscriber untuk POSE_TOPIC dengan callback on_pose.
@@ -102,6 +103,7 @@ class MiruNode:
         # Jika diterima, tampilkan log 'instruksi N: maju D, <nama belokan>' (lihat TURN_NAMES). Jika
         # diabaikan, cukup log debug.
         #A2 : buat "instruction" dengan format "{msg.id, msg.distance, msg.turn}"  
+        #AI
         instruction = QueuedInstruction(msg.id, msg.distance, msg.turn)
         accepted = self.queue.add(instruction)
         #A3 : Menampilkan "msg" dengan format "instruction" jika "msg.id" valid
@@ -141,6 +143,7 @@ class MiruNode:
     def on_parameter_change(self, parameters):
         for parameter in parameters:
             #C3 : ngambil parameter "SPEED_PARAM" aja
+            #AI
             if parameter.name == SPEED_PARAM:
                 #klo lebih kecil dari "MIN_SPEED" atau lebih besar "MAX_SPEED" akan ditolak
                 if parameter.value < MIN_SPEED or parameter.value > MAX_SPEED:
