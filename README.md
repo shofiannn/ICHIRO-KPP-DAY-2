@@ -215,10 +215,7 @@ Penggunaan AI: (sebutkan bagian mana yang dibantu AI, atau tulis "tidak ada")
 
 ### Langkah-langkah
 1. Menjalankan dan menghubungkan turtlesim, wasit, navigator, dan miru
--
 
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 # Task 2 - Miru
 
@@ -232,10 +229,6 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 5. Mengecek apakah masih ada instruksi di antrean atau tidak
 6. Mengambil instruksi di paling kiri dan akan diproses
 
--
-
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ## B. Pose dan Perintah Gerak
 
@@ -243,10 +236,7 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 1. Membuat publisher untuk mengirimkan pesan ke topic CMD_VEL_TOPIC
 2. Membuat subscriber yang menerima pesan dari topic POSE_TOPIC
 3. Menyimpan msg berisi informasi dari topic POSE_TOPIC ke self.pose 
--
 
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ## C. Aba-aba GO dan Parameter
 
@@ -255,10 +245,7 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 2. Menyimpan status terbaru "state" ke self.race_state
 3. Mendaftarkan parameter speed "SPEED_PARAM" dengan nilai awal 1
 4. Memverifikasi parameter speed terbaru di function "on_parameter_change"
--
 
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ## D. Maju
 
@@ -267,20 +254,14 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 2. Menghitung sisa jarak "remaining" di function "drive_step" menggunakan function "remaining_distance"
 3. Menghitung kecepatan "speed" menggunakan function "approach_speed"
 4. Mengubah kecepatan "speed" menjadi pesan di function "publish_velocity" yang berisi kecepatan linear "msg.linear.x" dan angular "msg.angular.z" dan dikirim ke topic CMD_VEL_TOPIC
--
 
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ## E. Belok
 
 ### Langkah-langkah
 1. Menghitung arah tujuan "self.target_heading" di function "start_turn" menggunakan function "turn_target"
 2. Mengirimkan pesan "msg" melalui publisher "publish_velocity" di function "turn_step"
--
 
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ## F. Laporan Status
 
@@ -288,19 +269,13 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 1. Membuat laporan Miru di function "publish_status" yang berisi, self.state.value, self.pose.x, self.pose.y, self.pose.theta, self.current_id, self.done_id, dan len(self.queue)
 2. Membuat publisher "status_publisher" yang akan mengirimkan laporan hasil function "publish_status" ke topic "STATUS_TOPIC"
 3. "self.status_timer" akan mengirimkan laporan 20 kali per detik
--
 
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ## G. Bonus: Berhenti Lebih Tepat
 
 ### Langkah-langkah
 1. Menghitung kecepatan berdasarkan sisa jarak "speed" di function "approach_speed"
--
 
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan, termasuk tabel hasil ukur.
 
 # Task 3 - Navigator
 
@@ -314,10 +289,8 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan, termasuk ta
 5. Mengubah pesan RaceMap menjadi objek GridMap dan menyimpannya di self.grid.
 6. Menampilkan informasi peta yang diterima melalui logger.
 7. Memanggil self.plan_route() untuk merencanakan rute dari titik awal ke titik akhir.
+note: bagian ini ditulis oleh AI
 
-
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ## B. Mencari Rute
 
@@ -328,9 +301,6 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 4. kembalikan nilai akhir berupa list yang merupakan urutan titik titik yang dikunjungi untuk mencapai finish
 
 
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
-
 ## C. Rute Menjadi Arah
 
 ### Langkah-langkah
@@ -338,25 +308,18 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 2. catat titik saat ini sebagai current dan titik yang akan dikunjungi sebagai next_cell
 3. cek perubahan yang terjadi antara current dan next_cell lalu masukkan sebuah bilangan ke dalam list directions sesuai dengan perubahan tersebut
 
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ## D. Arah Menjadi Instruksi
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
 1. lakukan perulangan sebanyak jumlah elemen apda list directions untuk mendeteksi perubahan arah
 2. setiap terjadi perubahan arah, catat id, step, dan current_direction kedalam list instruction
 3. setelah mencatat instruction, tambahkan nilai id dengan 1, reset step menjadi 1, dan sesuaikan current_direction dengan iterasi
 
 
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
-
 ## E. Mengirim Instruksi
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
 1. Membuat publisher untuk mengirim instruksi ke INSTRUCTION_TOPIC.
 2. Membuat subscriber untuk menerima status Miru dari STATUS_TOPIC dengan callback on_status.
 3. Menyimpan status Miru yang diterima ke self.last_status.
@@ -367,9 +330,8 @@ Jelaskan langkah-langkah yang dilakukan.
 8. Mengirim instruksi yang belum pernah dikirim hingga mencapai batas tersebut.
 9. Menampilkan informasi instruksi yang dikirim melalui logger.
 10. Memperbarui self.sent_count agar setiap instruksi hanya dikirim satu kali.
+note: bagian ini ditulis oleh AI
 
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ## F. Parameter instructions_ahead
 
@@ -380,11 +342,8 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 4. Menolak perubahan parameter jika nilainya berada di luar rentang yang diizinkan.
 5. Menerima perubahan parameter jika nilainya valid.
 6. Menggunakan nilai instructions_ahead untuk menentukan jumlah instruksi yang dikirim ke depan.
+note: bagian ini ditulis oleh AI
 
--
-
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ## G. Bonus: DFS lawan BFS
 
@@ -394,8 +353,3 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 3. setiap titik yang dikinjugi akan dicatat parentnya
 4. kembalikan nilai akhir berupa list yang merupakan urutan titik titik yang dikunjungi untuk mencapai finish
 
-
--
-
-### Screenshot
-Masukkan screenshot hasil eksekusi program atau proses yang relevan, termasuk tabel hasil ukur.
