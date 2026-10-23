@@ -353,3 +353,8 @@ note: bagian ini ditulis oleh AI
 3. setiap titik yang dikinjugi akan dicatat parentnya
 4. kembalikan nilai akhir berupa list yang merupakan urutan titik titik yang dikunjungi untuk mencapai finish
 
+Tabel Perbandingan BFS dan DFS
+| Seed | Panjang BFS | Panjang DFS | Dikunjungi BFS | Dikunjungi DFS | Waktu BFS | Waktu DFS |
+|---|---|---|---|---|---|---|
+| 1 | 18 | 32 | 71 | 43 | 27,6 s | 65 s |
+
