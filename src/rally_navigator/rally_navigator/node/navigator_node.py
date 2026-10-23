@@ -58,7 +58,13 @@ class NavigatorNode:
             return
 
         # Simpan sebagai GridMap di self.grid
-        self.grid = GridMap(msg)
+        self.grid = GridMap(
+            msg.width,
+            msg.height,
+            msg.rocks,
+            Cell(msg.start_col, msg.start_row),
+            Cell(msg.finish_col, msg.finish_row),
+        )
         rock_count = sum(msg.rocks)
         self.node.get_logger().info(
             f'peta diterima: {msg.width}x{msg.height}, {rock_count} batu, start ({msg.start_col}, {msg.start_row}), finis ({msg.finish_col}, {msg.finish_row})'
