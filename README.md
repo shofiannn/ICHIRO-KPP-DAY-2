@@ -3,7 +3,7 @@
 |    NRP     |           Nama             | Bagian             |
 | :--------: |       :------------:       | :----------------: |
 | ---------- | ------------------------   | Miru               |
-| ---------- | ------------------------   | Navigator          |
+| 5054261006 | Afwan Rizky Gazali         | Navigator          |
 
 # Tugas ROS2 - Reli Miru
 
@@ -307,9 +307,14 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan, termasuk ta
 ## A. Menerima Peta
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
+1. Membuat konfigurasi QoS dengan TRANSIENT_LOCAL dan RELIABLE.
+2. Membuat subscriber untuk menerima peta dari MAP_TOPIC dengan callback on_map.
+3. Mengabaikan peta baru jika peta sudah pernah diterima.
+4. Memvalidasi jumlah batu (rocks) agar sesuai dengan width × height.
+5. Mengubah pesan RaceMap menjadi objek GridMap dan menyimpannya di self.grid.
+6. Menampilkan informasi peta yang diterima melalui logger.
+7. Memanggil self.plan_route() untuk merencanakan rute dari titik awal ke titik akhir.
 
--
 
 ### Screenshot
 Masukkan screenshot hasil eksekusi program atau proses yang relevan.
@@ -317,9 +322,11 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## B. Mencari Rute
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
+1. cek apakah titik start dan finish berada dalam grid, kalau tidak ada return list kosong
+2. lakukan pencarian rute menggunakan BFS
+3. setiap titik yang dikinjugi akan dicatat parentnya
+4. kembalikan nilai akhir berupa list yang merupakan urutan titik titik yang dikunjungi untuk mencapai finish
 
--
 
 ### Screenshot
 Masukkan screenshot hasil eksekusi program atau proses yang relevan.
@@ -327,9 +334,9 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## C. Rute Menjadi Arah
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
-
--
+1. lakukan perulangan sebanyak jumlah titik yang dikunjungi -1
+2. catat titik saat ini sebagai current dan titik yang akan dikunjungi sebagai next_cell
+3. cek perubahan yang terjadi antara current dan next_cell lalu masukkan sebuah bilangan ke dalam list directions sesuai dengan perubahan tersebut
 
 ### Screenshot
 Masukkan screenshot hasil eksekusi program atau proses yang relevan.
@@ -338,8 +345,10 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ### Langkah-langkah
 Jelaskan langkah-langkah yang dilakukan.
+1. lakukan perulangan sebanyak jumlah elemen apda list directions untuk mendeteksi perubahan arah
+2. setiap terjadi perubahan arah, catat id, step, dan current_direction kedalam list instruction
+3. setelah mencatat instruction, tambahkan nilai id dengan 1, reset step menjadi 1, dan sesuaikan current_direction dengan iterasi
 
--
 
 ### Screenshot
 Masukkan screenshot hasil eksekusi program atau proses yang relevan.
@@ -348,8 +357,16 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 
 ### Langkah-langkah
 Jelaskan langkah-langkah yang dilakukan.
-
--
+1. Membuat publisher untuk mengirim instruksi ke INSTRUCTION_TOPIC.
+2. Membuat subscriber untuk menerima status Miru dari STATUS_TOPIC dengan callback on_status.
+3. Menyimpan status Miru yang diterima ke self.last_status.
+4. Memanggil self.send_instructions() setiap kali status Miru diterima.
+5. Memeriksa apakah rute tersedia, status Miru sudah diterima, dan terdapat subscriber instruksi.
+6. Mengambil nilai instructions_ahead untuk menentukan jumlah instruksi yang boleh dikirim ke depan.
+7. Menghitung batas instruksi yang perlu dikirim berdasarkan done_id dan nilai instructions_ahead.
+8. Mengirim instruksi yang belum pernah dikirim hingga mencapai batas tersebut.
+9. Menampilkan informasi instruksi yang dikirim melalui logger.
+10. Memperbarui self.sent_count agar setiap instruksi hanya dikirim satu kali.
 
 ### Screenshot
 Masukkan screenshot hasil eksekusi program atau proses yang relevan.
@@ -357,7 +374,12 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## F. Parameter instructions_ahead
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
+1. Mendeklarasikan parameter instructions_ahead dengan nilai awal DEFAULT_INSTRUCTIONS_AHEAD.
+2. Mendaftarkan callback on_parameter_change untuk memvalidasi perubahan parameter.
+3. Memeriksa apakah nilai parameter berada di antara MIN_INSTRUCTIONS_AHEAD dan MAX_INSTRUCTIONS_AHEAD.
+4. Menolak perubahan parameter jika nilainya berada di luar rentang yang diizinkan.
+5. Menerima perubahan parameter jika nilainya valid.
+6. Menggunakan nilai instructions_ahead untuk menentukan jumlah instruksi yang dikirim ke depan.
 
 -
 
@@ -367,7 +389,11 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## G. Bonus: DFS lawan BFS
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
+1. cek apakah titik start dan finish berada dalam grid, kalau tidak ada return list kosong
+2. lakukan pencarian rute menggunakan DFS
+3. setiap titik yang dikinjugi akan dicatat parentnya
+4. kembalikan nilai akhir berupa list yang merupakan urutan titik titik yang dikunjungi untuk mencapai finish
+
 
 -
 
