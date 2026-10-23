@@ -91,6 +91,7 @@ class MiruNode:
         #F1 : membuat "status_publisher" mengirim pesan "DriverStatus" ke topic "STATUS_TOPIC"
         self.status_publisher = self.node.create_publisher(DriverStatus, STATUS_TOPIC, 10)
         #mengirim laporan "self.publish_status" tiap 0.5 detik
+        #AI
         self.status_timer = self.node.create_timer(STATUS_PERIOD, self.publish_status)
 
 
@@ -109,7 +110,7 @@ class MiruNode:
         #A3 : Menampilkan "msg" dengan format "instruction" jika "msg.id" valid
         if accepted:
             self.node.get_logger().info(
-                f'instruksi {msg.id} : maju {msg.distance}, {TURN_NAMES[msg.turn]}'
+                f'instruksi {msg.id}: maju {msg.distance}, {TURN_NAMES[msg.turn]}'
             )
         #jika tidak, pesan ini akan muncul
         else:
@@ -185,6 +186,7 @@ class MiruNode:
         # Hitung selisih self.target_heading dan self.pose.theta, lalu minta kecepatan putarnya ke turn_rate.
         # Jika sudah pas, hentikan kura-kura dan return True. Jika belum, putar dan return
         error = wrap_angle(self.target_heading - self.pose.theta)
+        #AI
         rate = turn_rate(error)
         if rate == 0.0:
             self.publish_velocity(0.0, 0.0)
@@ -209,6 +211,7 @@ class MiruNode:
         msg.y = self.pose.y
         msg.theta = self.pose.theta
         #no instruksi yang sedang dikerjakan dan yang terakhir selesai
+        #AI
         msg.current_id = self.current_id
         msg.done_id = self.done_id
         #jumlah instruksi yang menunggu di antrean

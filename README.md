@@ -264,9 +264,10 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## D. Maju
 
 ### Langkah-langkah
-1. Menghitung jarak "distance" dan menentukan titik koordinat tujuan (target_x, target_y) yang akan dituju
-2. Menghitung sisa jarak dari x ke target_x
-3. 
+1. Menghitung titik tujuan (self.target_x, self.target_y) di function "start_drive" menggunakan function "target_point"
+2. Menghitung sisa jarak "remaining" di function "drive_step" menggunakan function "remaining_distance"
+3. Menghitung kecepatan "speed" menggunakan function "approach_speed"
+4. Mengubah kecepatan "speed" menjadi pesan di function "publish_velocity" yang berisi kecepatan linear "msg.linear.x" dan angular "msg.angular.z" dan dikirim ke topic CMD_VEL_TOPIC
 -
 
 ### Screenshot
@@ -275,8 +276,8 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## E. Belok
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
-
+1. Menghitung arah tujuan "self.target_heading" di function "start_turn" menggunakan function "turn_target"
+2. Mengirimkan pesan "msg" melalui publisher "publish_velocity" di function "turn_step"
 -
 
 ### Screenshot
@@ -285,8 +286,9 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## F. Laporan Status
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
-
+1. Membuat laporan Miru di function "publish_status" yang berisi, self.state.value, self.pose.x, self.pose.y, self.pose.theta, self.current_id, self.done_id, dan len(self.queue)
+2. Membuat publisher "status_publisher" yang akan mengirimkan laporan hasil function "publish_status" ke topic "STATUS_TOPIC"
+3. "self.status_timer" akan mengirimkan laporan 20 kali per detik
 -
 
 ### Screenshot
@@ -295,8 +297,7 @@ Masukkan screenshot hasil eksekusi program atau proses yang relevan.
 ## G. Bonus: Berhenti Lebih Tepat
 
 ### Langkah-langkah
-Jelaskan langkah-langkah yang dilakukan.
-
+1. Menghitung kecepatan berdasarkan sisa jarak "speed" di function "approach_speed"
 -
 
 ### Screenshot
