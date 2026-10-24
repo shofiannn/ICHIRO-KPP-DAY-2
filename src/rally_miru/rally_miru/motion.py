@@ -10,7 +10,7 @@ MAX_TURN_RATE = 1.5  # [rad/s]
 MIN_TURN_RATE = 0.3  # [rad/s]
 TURN_GAIN = 4.0  # [1/s]
 #G1
-APPROACH_GAIN = 3.0
+APPROACH_GAIN = 8.0
 APPROACH_MIN_SPEED = 0.05
 
 # Provided, do not modify
@@ -56,7 +56,6 @@ def turn_target(heading, turn):
     # Hitung arah setelah belok 90 derajat dari `heading` (kiri menambah sudut, kanan mengurangi),
     # lalu rapikan dengan wrap_angle.
     #E2 : 
-    # new_heading = heading
     #AI
     if turn == Instruction.TURN_LEFT:
         #belok kiri = berlawanan arah jarum jam = sudut nambah
@@ -64,6 +63,8 @@ def turn_target(heading, turn):
     elif turn == Instruction.TURN_RIGHT:
         #belok kanan = searah jarum jam = sudut berkurang
         new_heading = heading - math.pi / 2
+    else:
+        new_heading = heading
     return wrap_angle(new_heading)
 
 # Provided, do not modify

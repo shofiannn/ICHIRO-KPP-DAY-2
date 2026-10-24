@@ -4,7 +4,6 @@ from geometry_msgs.msg import Twist
 from rally_interfaces.msg import DriverStatus, Instruction, RaceState
 from rally_miru.instruction_queue import Instruction as QueuedInstruction
 from rally_miru.instruction_queue import InstructionQueue
-#G3
 from rally_miru.motion import (
     approach_speed, remaining_distance, snap_heading, snap_to_cell_center, target_point, turn_rate, turn_target,
     wrap_angle)
@@ -79,8 +78,8 @@ class MiruNode:
         self.node.create_subscription(Pose, POSE_TOPIC, self.on_pose, 20)
 
         # TODO: TASK C - Daftarkan parameter SPEED_PARAM dengan on_parameter_change,
-        #C3 : deklarasi "SPEED_PARAM" dengan nilai awal = "1.0"
-        self.node.declare_parameter(SPEED_PARAM, 1.0)
+        #C3 : deklarasi "SPEED_PARAM"
+        self.node.declare_parameter(SPEED_PARAM, 2.5)
         #C4: verifikasi perubahan pada "SPEED_PARAM"
         self.node.add_on_set_parameters_callback(self.on_parameter_change)
         #C1 : buat subscription yang menerima pesan berjenis "Racestate" dari topic "RACE_STATE_TOPIC" dengan ukuran 20 dan callback "self.on_race_state"
@@ -89,7 +88,7 @@ class MiruNode:
         # TODO: TASK F - Buat publisher untuk STATUS_TOPIC dan timer yang memanggil
         # publish_status tiap STATUS_PERIOD.
         #F1 : membuat "status_publisher" mengirim pesan "DriverStatus" ke topic "STATUS_TOPIC"
-        self.status_publisher = self.node.create_publisher(DriverStatus, STATUS_TOPIC, 10)
+        self.status_publisher = self.node.create_publisher(DriverStatus, STATUS_TOPIC, 20)
         #mengirim laporan "self.publish_status" tiap 0.5 detik
         #F2
         #AI
@@ -186,7 +185,7 @@ class MiruNode:
     def turn_step(self):
         # Hitung selisih self.target_heading dan self.pose.theta, lalu minta kecepatan putarnya ke turn_rate.
         # Jika sudah pas, hentikan kura-kura dan return True. Jika belum, putar dan return
-        #E3
+        #E3 
         error = wrap_angle(self.target_heading - self.pose.theta)
         #AI
         rate = turn_rate(error)
