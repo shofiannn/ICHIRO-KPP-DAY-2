@@ -79,11 +79,11 @@ class MiruNode:
         self.node.create_subscription(Pose, POSE_TOPIC, self.on_pose, 20)
 
         # TODO: TASK C - Daftarkan parameter SPEED_PARAM dengan on_parameter_change,
-        #C4 : deklarasi "SPEED_PARAM" dengan nilai awal = "1.0"
+        #C3 : deklarasi "SPEED_PARAM" dengan nilai awal = "1.0"
         self.node.declare_parameter(SPEED_PARAM, 1.0)
         #C4: verifikasi perubahan pada "SPEED_PARAM"
         self.node.add_on_set_parameters_callback(self.on_parameter_change)
-        #C2 : buat subscription yang menerima pesan berjenis "Racestate" dari topic "RACE_STATE_TOPIC" dengan ukuran 20 dan callback "self.on_race_state"
+        #C1 : buat subscription yang menerima pesan berjenis "Racestate" dari topic "RACE_STATE_TOPIC" dengan ukuran 20 dan callback "self.on_race_state"
         self.node.create_subscription(RaceState, RACE_STATE_TOPIC, self.on_race_state,  20)
 
         # TODO: TASK F - Buat publisher untuk STATUS_TOPIC dan timer yang memanggil
@@ -91,6 +91,7 @@ class MiruNode:
         #F1 : membuat "status_publisher" mengirim pesan "DriverStatus" ke topic "STATUS_TOPIC"
         self.status_publisher = self.node.create_publisher(DriverStatus, STATUS_TOPIC, 10)
         #mengirim laporan "self.publish_status" tiap 0.5 detik
+        #F2
         #AI
         self.status_timer = self.node.create_timer(STATUS_PERIOD, self.publish_status)
 
@@ -118,12 +119,12 @@ class MiruNode:
 
     # TODO: TASK B
     def on_pose(self, msg):
-        #B3 : Simpan pose terbaru di self.pose.
+        #B3 : Simpan posisi terbaru "pose" di self.pose.
         self.pose = msg
 
     def publish_velocity(self, linear, angular):
         # Kirim satu Twist: linear.x untuk maju, angular.z untuk berputar.
-        #D3 : membuat "msg" kosong
+        #D6 : membuat "msg" kosong
         msg = Twist()
         #kecepatan maju
         msg.linear.x = float(linear)
@@ -135,7 +136,7 @@ class MiruNode:
     # TODO: TASK C
     def on_race_state(self, msg):
         # Simpan status lomba terbaru di self.race_state.
-        #C1 : status lomba atau angka status ada di msg.state => 0 = bersiap, 1 = hitung mundur, 2 = GO, 3 = selesai, 4 = gagal
+        #C2 : status lomba atau angka status ada di msg.state => 0 = bersiap, 1 = hitung mundur, 2 = GO, 3 = selesai, 4 = gagal
         self.race_state = msg.state
 
     def get_speed(self):
@@ -143,7 +144,7 @@ class MiruNode:
 
     def on_parameter_change(self, parameters):
         for parameter in parameters:
-            #C3 : ngambil parameter "SPEED_PARAM" aja
+            #C5
             #AI
             if parameter.name == SPEED_PARAM:
                 #klo lebih kecil dari "MIN_SPEED" atau lebih besar "MAX_SPEED" akan ditolak
@@ -157,34 +158,35 @@ class MiruNode:
 
     # TODO: TASK D
     def start_drive(self, cells):
-        #D4 : Hitung titik tujuan `cells` kotak di depan posisi RENCANA (planned_x, planned_y),
+        #D1 : Hitung titik tujuan `cells` kotak di depan posisi RENCANA (planned_x, planned_y),
         # lalu simpan di self.target_x dan self.target_y.
         self.target_x, self.target_y = target_point(self.planned_x, self.planned_y, self.planned_heading, cells)
 
     def drive_step(self):
         # Jika sisa jarak ke target sudah 0 atau negatif, hentikan kura-kura dan return True.
         # Jika belum, maju dengan self.get_speed() dan return False.
-        #D5 : menghitung sisa jarak posisi miru sekarang dengan posisi tujuan
+        #D3 : menghitung sisa jarak posisi miru sekarang dengan posisi tujuan
         remaining = remaining_distance(self.pose.x, self.pose.y, self.planned_heading, self.target_x, self.target_y)
         #klo sisa nya udh 0 atau negatif, miru akan diam (linear_x = 0 dan linear_z = 0)
         if remaining <= 0 :
             self.publish_velocity(0.0, 0.0)
             return True
-        #G3
+        #G1
         speed = approach_speed(remaining, self.get_speed())
-        #klo belum, jalan terus
+        #D5 klo belum, jalan terus
         self.publish_velocity(speed, 0.0)
         return False
 
     # TODO: TASK E
     def start_turn(self, turn):
         # Hitung arah tujuan setelah belok dari planned_heading, lalu simpan di self.target_heading.
-        #E2
+        #E1
         self.target_heading = turn_target(self.planned_heading, turn)
 
     def turn_step(self):
         # Hitung selisih self.target_heading dan self.pose.theta, lalu minta kecepatan putarnya ke turn_rate.
         # Jika sudah pas, hentikan kura-kura dan return True. Jika belum, putar dan return
+        #E3
         error = wrap_angle(self.target_heading - self.pose.theta)
         #AI
         rate = turn_rate(error)
@@ -199,7 +201,7 @@ class MiruNode:
     def publish_status(self):
         # Kirim satu DriverStatus berisi state, pose, current_id, done_id, dan jumlah antrean.
         # Jangan kirim jika pose pertama belum datang.
-        #F2 : klo posisi miru belum ada, ga ada laporan
+        #F3 : klo posisi miru belum ada, ga ada laporan
         if self.pose == None:
             return
         #buat "msg" berisi "status posisi miru"

@@ -27,7 +27,7 @@ def snap_heading(theta):
 def target_point(x, y, heading, cells):
     # Hitung titik tujuan jika maju `cells` kotak dari (x, y) searah `heading`. Return (target_x,
     # target_y).
-    #D1 : jarak = jumlah kotak * "CELL_SIZE" => 1 meter
+    #D2 : jarak = jumlah kotak * "CELL_SIZE" => 1 meter
     distance = cells * CELL_SIZE
     #menentukan arah maju
     #AI
@@ -36,9 +36,10 @@ def target_point(x, y, heading, cells):
     return target_x, target_y
 
 def remaining_distance(x, y, heading, target_x, target_y):
-    #D2 :  Hitung sisa jarak ke titik tujuan searah `heading`.
+    #D4 :  Hitung sisa jarak ke titik tujuan searah `heading`.
     dx = target_x - x
     dy = target_y - y
+    #AI
     return dx * math.cos(heading) + dy * math.sin(heading)
 
 #G2
@@ -54,8 +55,8 @@ def approach_speed(remaining, max_speed):
 def turn_target(heading, turn):
     # Hitung arah setelah belok 90 derajat dari `heading` (kiri menambah sudut, kanan mengurangi),
     # lalu rapikan dengan wrap_angle.
-    #E1 : 
-    new_heading = heading
+    #E2 : 
+    # new_heading = heading
     #AI
     if turn == Instruction.TURN_LEFT:
         #belok kiri = berlawanan arah jarum jam = sudut nambah
